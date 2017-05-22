@@ -23,7 +23,7 @@ function run() {
     app.post('/', function (request, response) {
 
         response.send("Авторизация в твиттере");
-
+//axios.get('https://api.twitter.com/oauth/authenticate?oauth_token=866261745656090626-WgWVyytFOaSW0YCd4elebnSTv3I9mRR')
         response.end();
 
     });
@@ -34,10 +34,10 @@ function run() {
 /*
     var getAuthForm = function () {
         return '<form action="/" method="post">'+
-                '<input type="submit" text="Fdnjhbpfwbz"/></form>'
+                '<input type="submit" text="Авторизация"/></form>'
     }
 */
-//axios.get('https://api.twitter.com/oauth/authenticate?oauth_token=866261745656090626-WgWVyytFOaSW0YCd4elebnSTv3I9mRR')
+
 
     app.listen(port, function () {
         console.log("Server Ok.")
