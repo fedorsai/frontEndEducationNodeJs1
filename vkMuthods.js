@@ -8,8 +8,8 @@ const client_id = '6046102';
 const redirect_uri = 'http://localhost:3000/vk';
 const getAccessTokenUrl = 'https://oauth.vk.com/access_token?client_id='+client_id+'&client_secret='+client_secret+'&redirect_uri='+redirect_uri+'&code=';
 const getGroupIdUrl = 'https://api.vk.com/method/groups.get?extended=1&count=1&access_token=';
-let gid = '';
-let accessToken ='';
+var gid = '';
+var accessToken ='';
 
 function getGroupInfo(request, response){
     console.log(getAccessTokenUrl + request.query.code);
@@ -17,7 +17,9 @@ function getGroupInfo(request, response){
         .then(function (res) {
             console.log(res.data.access_token);
             accessToken = res.data.access_token;
-            console.log('getGroupId start');
+            response.cookie('accessToken',accessToken, { maxAge: 900000, httpOnly: true });
+            console.log(request.cookie);
+
             getGroupId(accessToken, response);
         });
 }
@@ -35,7 +37,7 @@ function getGroupId(accessToken, response){
 }
 
 function getWallPosts(accessToken, gid, response){
-    let getWallPostsUrl = 'https://api.vk.com/method/wall.get?owner_id=-' + gid + '&count=5&filter=all&access_token=' + accessToken;
+    var getWallPostsUrl = 'https://api.vk.com/method/wall.get?owner_id=-' + gid + '&count=5&filter=all&access_token=' + accessToken;
     axios.get(getWallPostsUrl)
         .then(function (res) {
             console.log(res.data);
@@ -50,7 +52,9 @@ function getWallPosts(accessToken, gid, response){
 
             });
             resultHtml = resultHtml + '</ul>';
+            //console.log(request.cookies);
             console.log(resultHtml);
+
 
             response.send(resultHtml);
             response.end();
@@ -58,4 +62,4 @@ function getWallPosts(accessToken, gid, response){
         });
 }
 
-module.exports = {getGroupInfo};
+module.exports = {getGroupInfo, getGroupId};
