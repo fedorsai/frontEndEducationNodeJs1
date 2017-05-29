@@ -1,0 +1,12 @@
+//
+   Created by Фёдор on 24.05.2017.
+html
+    head
+        title!= title
+        link(rel='stylesheet', href='../style/style.css')
+    body
+        ul
+            each val in posts
+                li= val
+            else
+                li Нет ни одной записи.
